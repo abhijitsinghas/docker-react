@@ -3,8 +3,25 @@ language: generic
 services:
   - docker
 
+# build commands to be executed before install
 before_install:
   - docker build -t abhijitsinghas/docker-react -f Dockerfile.dev .
 
+# test scripts to be executed after build is complete
 script:
   - docker run -e CI=true abhijitsinghas/docker-react npm run test
+
+# depllyments script for AWS ElasticBeanStack
+# deploy:
+#   provider: elasticbeanstack
+#   region: "us-west-2"
+#   app: "docker-react"
+#   env: "Docker-react-env"
+#   bucket: "bucket-name"
+#   bucket_path: "docker-react"
+#   on: 
+#     branch: master
+#   # AWS_ACCESS_KEY environment variable with aws access key set in Travis Console
+#   access_key_id: $AWS_ACCESS_KEY     
+#   # AWS_SECRET_KEY environment variable with aws secret key set in Travis Console
+#   secret_access_key: $AWS_SECRET_KEY
